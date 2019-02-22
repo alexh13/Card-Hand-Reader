@@ -10,12 +10,35 @@ that they represent.
 
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 
-// Assignment 4.1
-// Testing if there is a number in our lengths array
+const int cardNumLen = 8, cardHandLen = 5;
+
+
+// declared functions
+int max(const int cards[], const int num);
+void countCards(const int hand[], int cards[]);
+bool containsPair(const int hand[]);
+bool containsTwoPair(const int hand[]);
+bool containsThreeOfaKind(const int hand[]);
+bool containsFullHouse(const int hand[]);
+bool containsFourOfaKind(const int hand[]);
+
+
+// Main Program
+int main() {
+    int numArr[cardHandLen] = {0};
+
+    cout << "Enter five numeric cards, no face cards. Use 2 - 9.\\n " << endl;
+
+    for (int x = 0; x < cardHandLen; x++) {
+        cout << "Card " << x + 1 << ": ";
+        int num;
+        cin >> num;
+    }
+}
+
 
 int max(const int cards[], const int num) {
     int max = 0;
@@ -41,6 +64,7 @@ bool containsPair(const int hand[]) {
     return max(cards, 13) == 2;
 }
 
+
 bool containsTwoPair(const int hand[]) {
     int cards[13] = {0}, pairs = 0;
     for(int i = 0; i < 5; i++) {
@@ -59,28 +83,19 @@ bool containsThreeOfaKind(const int hand[]) {
 }
 
 
+bool containsFourOfaKind(const int hand[]) {
+    int cards[13] = {0};
+    countCards(hand, cards);
+    return max(cards, 13) == 4;
+}
+
 
 //bool containsStraight(const int hand[]) {
 
 //}
 
+
 bool containsFullHouse(const int hand[]) {
-    return containsTwoPair(hand) && containsThreeOfaKind(hand);
+    return containsPair(hand) && containsThreeOfaKind(hand);
 }
 
-// check for 4 of the same number
-//bool containsFourOfaKind(const int hand[]) {
-
-//}
-
-
-int main() {
-    int hand[] = {2, 2, 5, 5, 6};
-
-    if (containsTwoPair(hand)) {
-        cout << "contains a two pair" << endl;
-    }
-
-    else
-        cout << "no" << endl;
-}
