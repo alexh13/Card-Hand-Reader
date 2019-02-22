@@ -64,40 +64,59 @@ bool equalNeighbors(const char array[], int size) {
 }
 
 // Assignment 4.1
-bool containsHighCard(const int hand[]) {
+#include <iostream>
 
-}
-
-
-bool  containsPair(const int hand[]) {
-
-}
-
-bool  containsTwoPair(const int hand[]) {
-
-}
-
-bool  containsThreeOfaKind(const int hand[]) {
-
-}
-
-bool  containsStraight(const int hand[]) {
-
-}
-
-bool  containsFullHouse(const int hand[]) {
-
-}
-
-bool  containsFourOfaKind(const int hand[]) {
-
-}
-
+int max(const int cards[], const int num);
+bool isPair(const int hand[]);
+bool is2Pair(const int hand[]);
+bool isFullHouse(const int hand[]);
 
 int main() {
-    int hand[] = {2, 5, 3, 2, 9};
+    int hand[5] = {1, 4, 4, 13, 13};
+    std::cout << (isPair(hand) ? "yes" : "no") << "\n";
+    std::cout << (is2Pair(hand) ? "yes" : "no") << "\n";
 
-    if (containsPair(hand)) {
-        cout << "contains a pair" << endl;
+    return 0;
+}
+
+int max(const int cards[], const int num) {
+    int max = 0;
+    for(int i = 0; i < num; i++) {
+        if(cards[i] > max) {
+            max = cards[i];
+        }
     }
+    return max;
+}
+
+void countCards(const int hand[], int cards[]) {
+    for(int i = 0; i < 5; i++) {
+        ++cards[hand[i] - 1];
+    }
+}
+
+bool isPair(const int hand[]) {
+    int cards[13] = {0};
+    countCards(hand, cards);
+    return max(cards, 13) == 2;
+}
+
+bool is3OfKind(const int hand[]) {
+    int cards[13] = {0};
+    countCards(hand, cards);
+    return max(cards, 13) == 3;
+}
+
+bool is2Pair(const int hand[]) {
+    int cards[13] = {0}, pairs = 0;
+    for(int i = 0; i < 5; i++) {
+        if(++cards[hand[i] - 1] == 2) {
+            pairs++;
+        }
+    }
+    return (pairs == 2) && max(cards, 13) == 2;
+}
+
+bool isFullHouse(const int hand[]) {
+    return isPair(hand) && is3OfKind(hand);
 }
