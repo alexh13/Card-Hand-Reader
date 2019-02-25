@@ -104,7 +104,15 @@ bool containsFullHouse(const int hand[]) {
 }
 
 
-
+bool checkRun(const int cards[], const int start) {
+    int run = 0;
+    for(int i = start; i < start + 5; i++) {
+        if(cards[i] == 0) {
+            return false;
+        }
+    }
+    return true;
+}
 
 void runGame() {
     int numArr[cardHandLen] = {0};
