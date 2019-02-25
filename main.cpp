@@ -25,13 +25,26 @@ bool containsThreeOfaKind(const int hand[]);
 bool containsFullHouse(const int hand[]);
 bool containsFourOfaKind(const int hand[]);
 bool containsStraight(const int hand[]);
-string checkHand(const int hand[]);
-void runGame();
+bool checkRun(const int cards[], const int start);
 
 
 // Main Program
 int main() {
-    runGame();
+    int numArr[cardHandLen] = {0};
+
+    cout << "Enter five numeric cards, no face cards. Use 2 - 9.\n" << endl;
+
+    for (int i = 0; i < cardHandLen; i++) {
+        cout << "Card " << i + 1 << ": ";
+        int num;
+        cin >> num;
+    }
+    
+    std::cout << (isPair(hand) ? "yes" : "no") << "\n";
+    std::cout << (is2Pair(hand) ? "yes" : "no") << "\n";
+    std::cout << (isStraight(hand) ? "yes" : "no") << "\n";
+    std::cout << (is3OfKind(hand) ? "yes" : "no") << "\n";
+    std::cout << (isFullHouse(hand) ? "yes" : "no") << "\n";
 
     return 0;
 }
@@ -113,34 +126,3 @@ bool checkRun(const int cards[], const int start) {
     }
     return true;
 }
-
-void runGame() {
-    int numArr[cardHandLen] = {0};
-
-    cout << "Enter five numeric cards, no face cards. Use 2 - 9.\n" << endl;
-
-    for (int i = 0; i < cardHandLen; i++) {
-        cout << "Card " << i + 1 << ": ";
-        int num;
-        cin >> num;
-    }
-
-    if (containsFourOfaKind(hand))
-        return "Four of a kind!";
-    else if (containsFullHouse(hand))
-        return "Full House!";
-    else if (containsStraight(hand))
-        return "Straight!";
-    else if (containsThreeOfaKind(hand))
-        return "Three of a kind!";
-    else if (containsTwoPair(hand))
-        return "Two Pair!";
-    else if (containsPair(hand))
-        return "One Pair!";
-    else {
-        return "High!";
-    }
-
-
-}
-
