@@ -88,17 +88,14 @@ bool containsFourOfaKind(const int hand[]) {
 
 
 bool containsStraight(const int hand[]) {
-    int total = 0;
-    // Making sure that we have five arrays with 1 element in a row
-    for (int i = 0; i < 5; i++) {
-        if (hand[i] == 1)
-            total += 1;
-        else
-            total = 0;
-        if (total == 5)
-            break;
+    iint cards[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0}, run = 0;
+    countCards(hand, cards);
+    for(int i = 0; i < 13; i++) {
+        if(checkRun(hand, i)) {
+            return true;
+        }
     }
-    return (total == 5);
+    return false;
 }
 
 
