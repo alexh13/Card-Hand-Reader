@@ -15,18 +15,14 @@ using namespace std;
 const int cardNumLen = 8, cardHandLen = 5;
 
 
-#include <iostream>
-using namespace std;
-
-const int cardNumLen = 8, cardHandLen = 5;
-
 int max(const int cards[], const int num);
-bool isPair(const int hand[]);
-bool is2Pair(const int hand[]);
-bool is3OfKind(const int hand[]);
-bool isFullHouse(const int hand[]);
-bool isStraight(const int hand[]);
+bool containsPair(const int hand[]);
+bool containsTwoPair(const int hand[]);
+bool containsThreeOfaKind(const int hand[]);
+bool containsFullHouse(const int hand[]);
+bool containsStraight(const int hand[]);
 bool checkRun(const int cards[], const int start);
+
 
 int main() {
     int numArr[cardHandLen] = {0};
@@ -38,15 +34,24 @@ int main() {
         cin >> numArr[i];
     }
     
-    //int hand[5] = {2, 3, 4, 5, 6};
-    std::cout << "Pair:      " << (isPair(numArr) ? "yes" : "no") << "\n";
-    std::cout << "2 Pair:    " << (is2Pair(numArr) ? "yes" : "no") << "\n";
-    std::cout << "Straight:  " << (isStraight(numArr) ? "yes" : "no") << "\n";
-    std::cout << "3 of kind: " << (is3OfKind(numArr) ? "yes" : "no") << "\n";
-    std::cout << "Fullhouse: " << (isFullHouse(numArr) ? "yes" : "no") << "\n";
+
+    if (containsFullHouse(numArr))
+        cout << "Full House!" << endl;
+    else if (containsStraight(numArr))
+        cout << "Straight!" << endl;
+    else if (containsThreeOfaKind(numArr))
+        cout << "Three of a kind!" << endl;
+    else if (containsTwoPair(numArr))
+        cout << "Two Pair!" << endl;
+    else if (containsPair(numArr))
+        cout << "One Pair!" << endl;
+    else {
+        cout << "High!" << endl;
+    }
 
     return 0;
 }
+
 
 int max(const int cards[], const int num) {
     int max = 0;
@@ -58,25 +63,29 @@ int max(const int cards[], const int num) {
     return max;
 }
 
+
 void countCards(const int hand[], int cards[]) {
     for(int i = 0; i < 5; i++) {
         ++cards[hand[i] - 1];
     }
 }
 
-bool isPair(const int hand[]) {
+
+bool containsPair(const int hand[]) {
     int cards[13] = {0};
     countCards(hand, cards);
     return max(cards, 13) == 2;
 }
 
-bool is3OfKind(const int hand[]) {
+
+bool containsThreeOfaKind(const int hand[]) {
     int cards[13] = {0};
     countCards(hand, cards);
     return max(cards, 13) == 3;
 }
 
-bool is2Pair(const int hand[]) {
+
+bool containsTwoPair(const int hand[]) {
     int cards[13] = {0}, pairs = 0;
     for(int i = 0; i < 5; i++) {
         if(++cards[hand[i] - 1] == 2) {
@@ -86,11 +95,13 @@ bool is2Pair(const int hand[]) {
     return (pairs == 2) && max(cards, 13) == 2;
 }
 
-bool isFullHouse(const int hand[]) {
-    return isPair(hand) && is3OfKind(hand);
+
+bool containsFullHouse(const int hand[]) {
+    return containsPair(hand) && containsThreeOfaKind(hand);
 }
 
-bool isStraight(const int hand[]) {
+
+bool containsStraight(const int hand[]) {
     int cards[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0}, run = 0;
     countCards(hand, cards);
     for(int i = 0; i < 13; i++) {
@@ -100,6 +111,7 @@ bool isStraight(const int hand[]) {
     }
     return false;
 }
+
 
 bool checkRun(const int cards[], const int start) {
     int run = 0;
